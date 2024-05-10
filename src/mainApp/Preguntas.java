@@ -19,7 +19,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import mainApp.LeerCSV;
 
 /**
  *
@@ -166,7 +165,6 @@ public class Preguntas extends javax.swing.JPanel {
         this.repaint();
         
     }//GEN-LAST:event_MenosMouseReleased
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Correcta;

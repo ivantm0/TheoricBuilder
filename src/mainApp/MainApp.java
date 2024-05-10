@@ -5,6 +5,7 @@
 package mainApp;
 
 import com.opencsv.exceptions.CsvValidationException;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.FileNotFoundException;
@@ -34,12 +35,16 @@ public class MainApp extends javax.swing.JFrame {
         initComponents();
         ContDesp.setVisible(false);
         PanelInfo.setVisible(false);
-        setImageLabel(Mas, "src/images/Menos_off.png");
+        Anadir.setVisible(false);
+        setImageLabel(Mas, "src/images/Mas_off.png");
         setImageLabel(Info, "src/images/Info_off.png");
         setImageLabel(Desplegable, "src/images/Desplegable_off.png");
         setImageLabel(FondoDesp, "src/images/Cuadrado_off.png");
+        setImageLabel(Menos, "src/images/Menos_off.png");
         Panel.getViewport().setOpaque(false);
-        Panel.setViewportBorder(null);  
+        Panel.setViewportBorder(null);
+        Panel.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        
         //setImageLabel(Crear, "src/images/Cilindrico_off.png");
         
     }
@@ -98,6 +103,21 @@ public class MainApp extends javax.swing.JFrame {
         frase2 = new javax.swing.JLabel();
         Mas = new javax.swing.JLabel();
         Info = new javax.swing.JLabel();
+        Anadir = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        Titulo = new javax.swing.JLabel();
+        TituloPreg = new javax.swing.JLabel();
+        Titulo1 = new javax.swing.JLabel();
+        Correcta = new javax.swing.JLabel();
+        Titulo2 = new javax.swing.JLabel();
+        Incorrecta1 = new javax.swing.JLabel();
+        Incorrecta2 = new javax.swing.JLabel();
+        Incorrecta3 = new javax.swing.JLabel();
+        Menos = new javax.swing.JLabel();
         Panel = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         ContDesp = new javax.swing.JPanel();
@@ -116,6 +136,7 @@ public class MainApp extends javax.swing.JFrame {
         FondoInfo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(430, 932));
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         Contenido.setBackground(new java.awt.Color(5, 19, 36));
@@ -149,6 +170,11 @@ public class MainApp extends javax.swing.JFrame {
         frase2.setText("Añadir una pregunta");
 
         Mas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Mas_Off.png"))); // NOI18N
+        Mas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                MasMouseReleased(evt);
+            }
+        });
 
         Info.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Mas_Off.png"))); // NOI18N
         Info.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -157,13 +183,62 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
+        Anadir.setOpaque(false);
+        Anadir.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField1.setBorder(null);
+        Anadir.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 300, -1));
+
+        jTextField2.setBorder(null);
+        Anadir.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 300, -1));
+
+        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField3.setForeground(new java.awt.Color(153, 153, 153));
+        jTextField3.setBorder(null);
+        Anadir.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 300, -1));
+
+        jTextField4.setBorder(null);
+        Anadir.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 300, -1));
+
+        jTextField5.setBorder(null);
+        Anadir.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 300, -1));
+
+        Titulo.setForeground(new java.awt.Color(255, 255, 255));
+        Titulo.setText("Pregunta");
+        Anadir.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 120, -1));
+
+        TituloPreg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
+        Anadir.add(TituloPreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 320, 40));
+
+        Titulo1.setForeground(new java.awt.Color(255, 255, 255));
+        Titulo1.setText("Respuesta correcta");
+        Anadir.add(Titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 120, -1));
+
+        Correcta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
+        Anadir.add(Correcta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 320, 20));
+
+        Titulo2.setForeground(new java.awt.Color(255, 255, 255));
+        Titulo2.setText("Respuestas incorrectas");
+        Anadir.add(Titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 140, 20));
+
+        Incorrecta1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
+        Anadir.add(Incorrecta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 320, 20));
+
+        Incorrecta2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
+        Anadir.add(Incorrecta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 320, 20));
+
+        Incorrecta3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
+        Anadir.add(Incorrecta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 320, 20));
+
+        Menos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Menos_Off.png"))); // NOI18N
+        Anadir.add(Menos, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 20, 20));
+
         Panel.setBackground(new java.awt.Color(0, 0, 204));
         Panel.setBorder(null);
         Panel.setForeground(new java.awt.Color(255, 51, 51));
         Panel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         Panel.setOpaque(false);
 
-        jPanel2.setMaximumSize(new java.awt.Dimension(430, 932));
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.GridLayout(0, 1));
         Panel.setViewportView(jPanel2);
@@ -261,22 +336,24 @@ public class MainApp extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ContenidoLayout.createSequentialGroup()
                 .addGap(0, 24, Short.MAX_VALUE)
-                .addGroup(ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(ContenidoLayout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(titulo))
-                    .addComponent(frase1)
-                    .addComponent(ContDesp, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-                    .addGroup(ContenidoLayout.createSequentialGroup()
-                        .addComponent(frase2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Mas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Info, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8))
-                    .addComponent(Panel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(PanelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(Anadir, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                    .addGroup(ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(ContenidoLayout.createSequentialGroup()
+                            .addGap(62, 62, 62)
+                            .addComponent(titulo))
+                        .addComponent(frase1)
+                        .addComponent(ContDesp, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                        .addGroup(ContenidoLayout.createSequentialGroup()
+                            .addComponent(frase2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Mas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(Info, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(8, 8, 8))
+                        .addComponent(Panel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(PanelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(24, 24, 24))
         );
         ContenidoLayout.setVerticalGroup(
@@ -298,8 +375,10 @@ public class MainApp extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PanelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(Anadir, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ContenidoLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -383,7 +462,21 @@ public class MainApp extends javax.swing.JFrame {
         colocarPanel("src/mainApp/simulador5/Preguntas.csv");
     }//GEN-LAST:event_Opcion5MouseReleased
 
-    int cont = 0, cont2 = 0;
+    private void MasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MasMouseReleased
+        
+        if(cont3 == 0){
+            Anadir.setVisible(true);
+            //setImageLabel(FondoDesp, "src/images/Cuadrado_off.png");
+            setImageLabel(Mas, "src/images/Mas_on.png");
+            cont3++;
+        }else{
+            Anadir.setVisible(false);
+            setImageLabel(Mas, "src/images/Mas_off.png");
+            cont3--;
+        }
+    }//GEN-LAST:event_MasMouseReleased
+
+    int cont = 0, cont2 = 0, cont3 = 0;
     /**
      * @param args the command line arguments
      */
@@ -429,16 +522,22 @@ public class MainApp extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Anadir;
     private javax.swing.JPanel ContDesp;
     private javax.swing.JPanel Contenido;
+    private javax.swing.JLabel Correcta;
     private javax.swing.JLabel Crear;
     private javax.swing.JLabel Desplegable;
     private javax.swing.JLabel Display;
     private javax.swing.JLabel EtiqCrear;
     private javax.swing.JLabel FondoDesp;
     private javax.swing.JLabel FondoInfo;
+    private javax.swing.JLabel Incorrecta1;
+    private javax.swing.JLabel Incorrecta2;
+    private javax.swing.JLabel Incorrecta3;
     private javax.swing.JLabel Info;
     private javax.swing.JLabel Mas;
+    private javax.swing.JLabel Menos;
     private javax.swing.JLabel Opcion1;
     private javax.swing.JLabel Opcion2;
     private javax.swing.JLabel Opcion3;
@@ -449,10 +548,19 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JLabel Texto1;
     private javax.swing.JLabel Texto2;
     private javax.swing.JLabel Texto3;
+    private javax.swing.JLabel Titulo;
+    private javax.swing.JLabel Titulo1;
+    private javax.swing.JLabel Titulo2;
+    private javax.swing.JLabel TituloPreg;
     private javax.swing.JLabel frase1;
     private javax.swing.JLabel frase2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
