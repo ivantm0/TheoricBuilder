@@ -6,6 +6,7 @@ package mainApp;
  */
 
 
+import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import java.awt.Color;
 import java.awt.Image;
@@ -31,7 +32,7 @@ public class Preguntas extends javax.swing.JPanel {
      */
     public Preguntas() throws IOException, FileNotFoundException, CsvValidationException {
         initComponents();
-        
+        //setImageLabel(Fondo, "src/images/Cuadrado_off.png");
         
     }
     
@@ -42,40 +43,62 @@ public class Preguntas extends javax.swing.JPanel {
         this.repaint();
     }
     
-    public void cargarCSV(int index, String ruta) throws IOException, FileNotFoundException, CsvValidationException{
-        ArrayList<String> datos = new ArrayList<>();
-        datos = datosCSV(ruta);
-        String texto = datos.get(index);
+    public int longitud(String ruta) throws FileNotFoundException, IOException, CsvValidationException{
+        String archCSV = ruta;
+        CSVReader csvReader = new CSVReader(new FileReader(archCSV));
+        String[] fila = null;
+        ArrayList<String> fila2 = new ArrayList<>();
         
-        String[] partes = texto.split(",");
-        
-        TextoPregunta.setText(partes[0].replaceAll("\\[", ""));
-        jLabel1.setText(partes[1]);
-        jLabel3.setText(partes[2]);
-        jLabel4.setText(partes[3]);
-        jLabel5.setText(partes[4].replaceAll("\\]", ""));
-    }
-    
-    public ArrayList<String> datosCSV(String ruta) throws FileNotFoundException, IOException, CsvValidationException{
-        BufferedReader br = null;         
-        br =new BufferedReader(new FileReader(ruta));
-        String line = br.readLine();
-        ArrayList <String> datos = new ArrayList<>();
-        
-        while (null!=line) {
-            String [] fields = line.split(";");           
-            datos.add(Arrays.toString(fields));            
-            line = br.readLine();
+        while((fila = csvReader.readNext()) != null) {
+            //System.out.println(fila[0] + " | " + fila[1] + " |  " + fila[2]);
+            fila2.add(fila[0]);
+            fila2.add(fila[1]);
+            fila2.add(fila[2]);
+            fila2.add(fila[3]);
+            fila2.add(fila[4]);
         }
         
-        return datos;
+        int z=0,x=1,c=2,v=3,b=4;
+        return fila2.size()/5;
     }
     
-    public int longitudCSV(String ruta) throws IOException, FileNotFoundException, CsvValidationException{
-        ArrayList<String> datos = new ArrayList<>();
-        datos = datosCSV(ruta);
+    public JPanel leerCSV(String ruta, int index) throws FileNotFoundException, IOException, CsvValidationException{
+        String archCSV = ruta;
+        CSVReader csvReader = new CSVReader(new FileReader(archCSV));
+        String[] fila = null;
+        ArrayList<String> fila2 = new ArrayList<>();
         
-        return datos.size();
+        while((fila = csvReader.readNext()) != null) {
+            //System.out.println(fila[0] + " | " + fila[1] + " |  " + fila[2]);
+            fila2.add(fila[0]);
+            fila2.add(fila[1]);
+            fila2.add(fila[2]);
+            fila2.add(fila[3]);
+            fila2.add(fila[4]);
+        }
+        
+        int z=0,x=1,c=2,v=3,b=4;
+        String[] elementos = new String[fila2.size()/5];
+        for(int i=0; i<fila2.size()/5; i++){
+            elementos[i] = fila2.get(z) + ", " + fila2.get(x) + ", " + fila2.get(c) + ", " + fila2.get(v) + ", " + fila2.get(b);
+            z+=5; x+=5; c+=5;  v+=5; b+=5;
+        }
+        
+        String[] preguntas = elementos[index].split(",");
+ 
+        TextoPregunta.setText(preguntas[0]);
+        jLabel1.setText(preguntas[1]);
+        jLabel3.setText(preguntas[2]);
+        jLabel4.setText(preguntas[3]);
+        jLabel5.setText(preguntas[4]);
+        
+        csvReader.close();
+        return this;
+    }
+    
+    public JPanel cargarPanel(JPanel panel, JPanel donde) throws IOException, FileNotFoundException, CsvValidationException{
+        donde.add(panel);
+        return donde;
     }
 
     /**
@@ -155,14 +178,13 @@ public class Preguntas extends javax.swing.JPanel {
         });
         add(Menos, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 20, 20));
 
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Fondo.png"))); // NOI18N
-        add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 340));
+        Fondo.setBackground(new java.awt.Color(102, 102, 255));
+        Fondo.setForeground(new java.awt.Color(102, 102, 255));
+        add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 300));
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenosMouseReleased
-        this.removeAll();
-        this.revalidate();
-        this.repaint();
+
         
     }//GEN-LAST:event_MenosMouseReleased
 

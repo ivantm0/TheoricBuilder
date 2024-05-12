@@ -4,58 +4,39 @@
  */
 package mainApp;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  *
  * @author ivant
  */
 public class PreguntasCSV {
-    private String pregunta, correcta, incorrecta1, incorrecta2, incorrecta3;
     
-    PreguntasCSV(String pregunta, String correcta, String incorrecta1, String incorrecta2, String incorrecta3){
-        this.pregunta = pregunta;
-        this.correcta = correcta;
-        this.incorrecta1 = incorrecta1;
-        this.incorrecta2 = incorrecta2;
-        this.incorrecta3 = incorrecta3;
+    public static ArrayList leerCSV() throws FileNotFoundException, IOException, CsvValidationException{
+        String archCSV = "src/javaapplication15/Preguntas.csv";
+        CSVReader csvReader = new CSVReader(new FileReader(archCSV));
+        String[] fila = null;
+        ArrayList<String> fila2 = new ArrayList<>();
+        
+        while((fila = csvReader.readNext()) != null) {
+            //System.out.println(fila[0] + " | " + fila[1] + " |  " + fila[2]);
+            fila2.add(fila[0]);
+            fila2.add(fila[1]);
+            fila2.add(fila[2]);
+            fila2.add(fila[3]);
+            fila2.add(fila[4]);
+        }
+        
+        csvReader.close();
+        return fila2;
     }
-
-    public void setPregunta(String pregunta) {
-        this.pregunta = pregunta;
-    }
-
-    public void setCorrecta(String correcta) {
-        this.correcta = correcta;
-    }
-
-    public void setIncorrecta1(String incorrecta1) {
-        this.incorrecta1 = incorrecta1;
-    }
-
-    public void setIncorrecta2(String incorrecta2) {
-        this.incorrecta2 = incorrecta2;
-    }
-
-    public void setIncorrecta3(String incorrecta3) {
-        this.incorrecta3 = incorrecta3;
-    }
-
-    public String getPregunta() {
-        return pregunta;
-    }
-
-    public String getCorrecta() {
-        return correcta;
-    }
-
-    public String getIncorrecta1() {
-        return incorrecta1;
-    }
-
-    public String getIncorrecta2() {
-        return incorrecta2;
-    }
-
-    public String getIncorrecta3() {
-        return incorrecta3;
+    
+    public static void cargarPanel(ArrayList lista){
+        
     }
 }
