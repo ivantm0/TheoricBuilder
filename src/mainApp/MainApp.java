@@ -8,11 +8,16 @@ import com.opencsv.exceptions.CsvValidationException;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -28,9 +33,8 @@ public class MainApp extends javax.swing.JFrame {
     /**
      * Creates new form prueba
      */
-    
-    Preguntas p = new Preguntas();
-    Preguntas p2 = new Preguntas();
+    int indexSim = 1;
+    Preguntas p = new Preguntas(indexSim);
     public MainApp() throws IOException, FileNotFoundException, CsvValidationException {
         initComponents();
         ContDesp.setVisible(false);
@@ -40,13 +44,18 @@ public class MainApp extends javax.swing.JFrame {
         setImageLabel(Info, "src/images/Info_off.png");
         setImageLabel(Desplegable, "src/images/Desplegable_off.png");
         setImageLabel(FondoDesp, "src/images/Cuadrado_off.png");
-        setImageLabel(Menos, "src/images/Menos_off.png");
+        setImageLabel(BtnAnadir, "src/images/Cilindrico_on.png");
+        setImageLabel(FondoInfo, "src/images/Panel_Info.png");
+        setImageLabel(jLabel2, "src/images/Cuadrado_off.png");
+        setImageLabel(TituloPreg, "src/images/Rectangulo_on.png");
+        setImageLabel(Correcta, "src/images/Rectangulo_on.png");
+        setImageLabel(Incorrecta1, "src/images/Rectangulo_on.png");
+        setImageLabel(Incorrecta2, "src/images/Rectangulo_on.png");
+        setImageLabel(Incorrecta3, "src/images/Rectangulo_on.png");
+        setImageLabel(Crear, "src/images/Cilindrico_on.png");
         Panel.getViewport().setOpaque(false);
         Panel.setViewportBorder(null);
-        Panel.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
-        
-        //setImageLabel(Crear, "src/images/Cilindrico_off.png");
-        
+        Panel.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));        
     }
     
     public void setImageLabel(JLabel labelName, String root){
@@ -70,19 +79,43 @@ public class MainApp extends javax.swing.JFrame {
             int aux = p.longitudCSV(ruta);
             ArrayList<Preguntas> paneles= new ArrayList<>();
             jPanel2.removeAll();
-        for(int i=0; i<aux; i++){
-            paneles.add(new Preguntas());
-            paneles.get(i).cargarCSV(i, ruta);
-        }
-        for(int i=0; i<aux; i++){
-            showPanel(paneles.get(i), jPanel2);
-        }
+            
+            for(int i=0; i<aux; i++){
+                paneles.add(new Preguntas(indexSim));
+                paneles.get(i).cargarCSV(i, ruta);
+                showPanel(paneles.get(i), jPanel2);
+            }
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CsvValidationException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+    }
+    
+    public static void zipFiles(String sourceFile, String dest) throws IOException {
+
+        // ZIP de destino, url y nombre del zip
+        FileOutputStream fos = new FileOutputStream(dest);
+        ZipOutputStream zipOut = new ZipOutputStream(fos);
+
+        // Buscamos el archivo fisico
+        File fileToZip = new File(sourceFile);
+        //Convertimos el archivo a un InputStream y lo agregamos a una entrada del ZIP
+        FileInputStream fis = new FileInputStream(fileToZip);
+        ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
+
+        // Agregamos la entrada del zip con el archivo al archivo de salida.
+        zipOut.putNextEntry(zipEntry);
+        byte[] bytes = new byte[1024];
+        int length;
+        while ((length = fis.read(bytes)) >= 0) {
+            zipOut.write(bytes, 0, length);
         }
         
+        // Cerramos los recursos.
+        zipOut.close();
+        fis.close();
+        fos.close();
     }
 
     /**
@@ -117,7 +150,9 @@ public class MainApp extends javax.swing.JFrame {
         Incorrecta1 = new javax.swing.JLabel();
         Incorrecta2 = new javax.swing.JLabel();
         Incorrecta3 = new javax.swing.JLabel();
-        Menos = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        BtnAnadir = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         Panel = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         ContDesp = new javax.swing.JPanel();
@@ -137,6 +172,7 @@ public class MainApp extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(430, 932));
+        setResizable(false);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         Contenido.setBackground(new java.awt.Color(5, 19, 36));
@@ -186,52 +222,83 @@ public class MainApp extends javax.swing.JFrame {
         Anadir.setOpaque(false);
         Anadir.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTextField1.setBackground(new java.awt.Color(182, 225, 249));
+        jTextField1.setFont(new java.awt.Font("Raleway", 0, 18)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(5, 19, 36));
         jTextField1.setBorder(null);
-        Anadir.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 300, -1));
+        Anadir.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 300, 40));
 
+        jTextField2.setBackground(new java.awt.Color(182, 225, 249));
+        jTextField2.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(5, 19, 36));
         jTextField2.setBorder(null);
-        Anadir.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 300, -1));
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        Anadir.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 300, 20));
 
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setForeground(new java.awt.Color(153, 153, 153));
+        jTextField3.setBackground(new java.awt.Color(182, 225, 249));
+        jTextField3.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
+        jTextField3.setForeground(new java.awt.Color(5, 19, 36));
         jTextField3.setBorder(null);
-        Anadir.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 300, -1));
+        Anadir.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 300, 20));
 
+        jTextField4.setBackground(new java.awt.Color(182, 225, 249));
+        jTextField4.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
+        jTextField4.setForeground(new java.awt.Color(5, 19, 36));
         jTextField4.setBorder(null);
-        Anadir.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 300, -1));
+        Anadir.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 300, 20));
 
+        jTextField5.setBackground(new java.awt.Color(182, 225, 249));
+        jTextField5.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
+        jTextField5.setForeground(new java.awt.Color(5, 19, 36));
         jTextField5.setBorder(null);
-        Anadir.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 300, -1));
+        Anadir.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 300, 20));
 
         Titulo.setForeground(new java.awt.Color(255, 255, 255));
         Titulo.setText("Pregunta");
-        Anadir.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 120, -1));
+        Anadir.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 120, -1));
 
         TituloPreg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(TituloPreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 320, 40));
+        Anadir.add(TituloPreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 320, 40));
 
         Titulo1.setForeground(new java.awt.Color(255, 255, 255));
         Titulo1.setText("Respuesta correcta");
-        Anadir.add(Titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 120, -1));
+        Anadir.add(Titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 120, -1));
 
         Correcta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(Correcta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 320, 20));
+        Anadir.add(Correcta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 320, 20));
 
         Titulo2.setForeground(new java.awt.Color(255, 255, 255));
         Titulo2.setText("Respuestas incorrectas");
-        Anadir.add(Titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 140, 20));
+        Anadir.add(Titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 140, 20));
 
         Incorrecta1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(Incorrecta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 320, 20));
+        Anadir.add(Incorrecta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 320, 20));
 
         Incorrecta2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(Incorrecta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 320, 20));
+        Anadir.add(Incorrecta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 320, 20));
 
         Incorrecta3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(Incorrecta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 320, 20));
+        Anadir.add(Incorrecta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 320, 20));
 
-        Menos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Menos_Off.png"))); // NOI18N
-        Anadir.add(Menos, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 20, 20));
+        jLabel1.setFont(new java.awt.Font("Raleway", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(5, 19, 36));
+        jLabel1.setText("Añadir");
+        Anadir.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, -1, -1));
+
+        BtnAnadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cilindrico_On.png"))); // NOI18N
+        BtnAnadir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                BtnAnadirMouseReleased(evt);
+            }
+        });
+        Anadir.add(BtnAnadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 100, 20));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cuadrado_Off.png"))); // NOI18N
+        Anadir.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 380, 290));
 
         Panel.setBackground(new java.awt.Color(0, 0, 204));
         Panel.setBorder(null);
@@ -303,20 +370,29 @@ public class MainApp extends javax.swing.JFrame {
         EtiqCrear.setText("Crear");
 
         Crear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cilindrico_Off.png"))); // NOI18N
+        Crear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                CrearMouseReleased(evt);
+            }
+        });
 
+        PanelInfo.setOpaque(false);
         PanelInfo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Texto1.setFont(new java.awt.Font("Raleway", 0, 12)); // NOI18N
+        Texto1.setForeground(new java.awt.Color(255, 255, 255));
         Texto1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Texto1.setText("Añade las preguntas que quieres que aparezcan durante");
         PanelInfo.add(Texto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 343, -1));
 
         Texto2.setFont(new java.awt.Font("Raleway", 0, 12)); // NOI18N
+        Texto2.setForeground(new java.awt.Color(255, 255, 255));
         Texto2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Texto2.setText("la simulación. Luego pulsa el botón crear para exportar");
         PanelInfo.add(Texto2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 343, -1));
 
         Texto3.setFont(new java.awt.Font("Raleway", 0, 12)); // NOI18N
+        Texto3.setForeground(new java.awt.Color(255, 255, 255));
         Texto3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Texto3.setText("El archivo zip que deberas subir SharePoint");
         PanelInfo.add(Texto3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 343, -1));
@@ -338,22 +414,21 @@ public class MainApp extends javax.swing.JFrame {
                 .addGap(0, 24, Short.MAX_VALUE)
                 .addGroup(ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(Anadir, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-                    .addGroup(ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(ContenidoLayout.createSequentialGroup()
-                            .addGap(62, 62, 62)
-                            .addComponent(titulo))
-                        .addComponent(frase1)
-                        .addComponent(ContDesp, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-                        .addGroup(ContenidoLayout.createSequentialGroup()
-                            .addComponent(frase2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Mas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Info, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(8, 8, 8))
-                        .addComponent(Panel, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(PanelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ContenidoLayout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(titulo))
+                    .addComponent(frase1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ContDesp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ContenidoLayout.createSequentialGroup()
+                        .addComponent(frase2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Mas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Info, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
+                    .addComponent(Panel)
+                    .addComponent(PanelInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
         ContenidoLayout.setVerticalGroup(
@@ -405,6 +480,7 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_InfoMouseReleased
 
     private void Opcion1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion1MouseReleased
+        indexSim = 1;
         Display.setText("Ahora aprendo");
         ContDesp.setVisible(false);
         setImageLabel(Desplegable, "src/images/Desplegable_off.png");
@@ -427,6 +503,7 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_DesplegableMouseReleased
 
     private void Opcion2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion2MouseReleased
+        indexSim = 2;
         Display.setText("El cazador");
         ContDesp.setVisible(false);
         setImageLabel(Desplegable, "src/images/Desplegable_off.png");
@@ -436,6 +513,7 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_Opcion2MouseReleased
 
     private void Opcion3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion3MouseReleased
+        indexSim = 3;
         Display.setText("Atrapa los univercoins");
         ContDesp.setVisible(false);
         setImageLabel(Desplegable, "src/images/Desplegable_off.png");
@@ -445,6 +523,7 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_Opcion3MouseReleased
 
     private void Opcion4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion4MouseReleased
+        indexSim = 4;
         Display.setText("BAAM");
         ContDesp.setVisible(false);
         setImageLabel(Desplegable, "src/images/Desplegable_off.png");
@@ -454,6 +533,7 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_Opcion4MouseReleased
 
     private void Opcion5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion5MouseReleased
+        indexSim = 5;
         Display.setText("PiensoPalabra");
         ContDesp.setVisible(false);
         setImageLabel(Desplegable, "src/images/Desplegable_off.png");
@@ -475,6 +555,33 @@ public class MainApp extends javax.swing.JFrame {
             cont3--;
         }
     }//GEN-LAST:event_MasMouseReleased
+
+    private void BtnAnadirMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAnadirMouseReleased
+        String[] datos = new String[5];
+        datos[0] = jTextField1.getText();
+        datos[1] = jTextField2.getText();
+        datos[2] = jTextField3.getText();
+        datos[3] = jTextField4.getText();
+        datos[4] = jTextField5.getText();
+        p.escribirCSV("src/mainApp/simulador" + indexSim +"/Preguntas.csv", datos);
+        Anadir.setVisible(false);
+        setImageLabel(Mas, "src/images/Mas_off.png");
+        colocarPanel("src/mainApp/simulador" + indexSim + "/Preguntas.csv");
+    }//GEN-LAST:event_BtnAnadirMouseReleased
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void CrearMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearMouseReleased
+        try {
+            String ruta1 = "src/mainApp/simulador" + indexSim + "/Preguntas.csv";
+            String ruta2 = "src/mainApp/simulador" + indexSim + "/Preguntas.zip";
+            zipFiles(ruta1, ruta2);
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_CrearMouseReleased
 
     int cont = 0, cont2 = 0, cont3 = 0;
     /**
@@ -523,6 +630,7 @@ public class MainApp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Anadir;
+    private javax.swing.JLabel BtnAnadir;
     private javax.swing.JPanel ContDesp;
     private javax.swing.JPanel Contenido;
     private javax.swing.JLabel Correcta;
@@ -537,7 +645,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JLabel Incorrecta3;
     private javax.swing.JLabel Info;
     private javax.swing.JLabel Mas;
-    private javax.swing.JLabel Menos;
     private javax.swing.JLabel Opcion1;
     private javax.swing.JLabel Opcion2;
     private javax.swing.JLabel Opcion3;
@@ -554,6 +661,8 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JLabel TituloPreg;
     private javax.swing.JLabel frase1;
     private javax.swing.JLabel frase2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
