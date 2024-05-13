@@ -104,7 +104,7 @@ public class Preguntas extends javax.swing.JPanel {
     }
     
     public ArrayList<String> datosCSV(String ruta) throws FileNotFoundException, IOException, CsvValidationException{
-        File archivoPreguntas = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas.csv");
+        File archivoPreguntas = new File(ruta);
         
         if(!archivoPreguntas.exists()){
             archivoPreguntas.createNewFile();
