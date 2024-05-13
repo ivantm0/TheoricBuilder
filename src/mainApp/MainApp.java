@@ -94,30 +94,25 @@ public class MainApp extends javax.swing.JFrame {
         }  
     }
     
-    public static void zipFiles(String sourceFile, String dest) throws IOException {
+    public static void archivoZip(String ruta, String destino) throws IOException {
+        FileOutputStream archivo = new FileOutputStream(destino);
+        ZipOutputStream zip = new ZipOutputStream(archivo);
 
-        // ZIP de destino, url y nombre del zip
-        FileOutputStream fos = new FileOutputStream(dest);
-        ZipOutputStream zipOut = new ZipOutputStream(fos);
+        File fileToZip = new File(ruta);
 
-        // Buscamos el archivo fisico
-        File fileToZip = new File(sourceFile);
-        //Convertimos el archivo a un InputStream y lo agregamos a una entrada del ZIP
         FileInputStream fis = new FileInputStream(fileToZip);
         ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
 
-        // Agregamos la entrada del zip con el archivo al archivo de salida.
-        zipOut.putNextEntry(zipEntry);
+        zip.putNextEntry(zipEntry);
         byte[] bytes = new byte[1024];
         int length;
         while ((length = fis.read(bytes)) >= 0) {
-            zipOut.write(bytes, 0, length);
+            zip.write(bytes, 0, length);
         }
         
-        // Cerramos los recursos.
-        zipOut.close();
+        zip.close();
         fis.close();
-        fos.close();
+        archivo.close();
     }
 
     /**
@@ -565,11 +560,16 @@ public class MainApp extends javax.swing.JFrame {
         datos[2] = jTextField3.getText();
         datos[3] = jTextField4.getText();
         datos[4] = jTextField5.getText();
-        p.escribirCSV("src/mainApp/simulador" + indexSim +"/Preguntas.csv", datos);
-        Anadir.setVisible(false);
-        setImageLabel(Mas, "src/images/Mas_off.png");
-        colocarPanel("src/mainApp/simulador" + indexSim + "/Preguntas.csv");
-        cont3--;
+        
+        if(datos[0].equals("") || datos[1].equals("") || datos[2].equals("") || datos[3].equals("") || datos[4].equals("")){
+            
+        }else{
+            p.escribirCSV("src/mainApp/simulador" + indexSim +"/Preguntas.csv", datos);
+            Anadir.setVisible(false);
+            setImageLabel(Mas, "src/images/Mas_off.png");
+            colocarPanel("src/mainApp/simulador" + indexSim + "/Preguntas.csv");
+            cont3--;
+        }
     }//GEN-LAST:event_BtnAnadirMouseReleased
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -580,7 +580,7 @@ public class MainApp extends javax.swing.JFrame {
         try {
             String ruta1 = "src/mainApp/simulador" + indexSim + "/Preguntas.csv";
             String ruta2 = "src/mainApp/simulador" + indexSim + "/Preguntas.zip";
-            zipFiles(ruta1, ruta2);
+            archivoZip(ruta1, ruta2);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }

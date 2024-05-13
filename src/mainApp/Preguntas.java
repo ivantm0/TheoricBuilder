@@ -104,8 +104,14 @@ public class Preguntas extends javax.swing.JPanel {
     }
     
     public ArrayList<String> datosCSV(String ruta) throws FileNotFoundException, IOException, CsvValidationException{
+        File archivoPreguntas = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas.csv");
+        
+        if(!archivoPreguntas.exists()){
+            archivoPreguntas.createNewFile();
+        }
+        
         BufferedReader br = null;         
-        br =new BufferedReader(new FileReader(ruta));
+        br =new BufferedReader(new FileReader(archivoPreguntas));
         String line = br.readLine();
         ArrayList <String> datos = new ArrayList<>();
         
@@ -120,25 +126,23 @@ public class Preguntas extends javax.swing.JPanel {
     }
     
     public void eliminarDato(String datoEliminar, int indexSimulador) throws IOException, FileNotFoundException, CsvValidationException{
-        File inputFile = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas.csv");
-        File tempFile = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas2.csv");
+        File archivoPreguntas = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas.csv");
+        File archivoAux = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas2.csv");
     
-        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+        BufferedReader reader = new BufferedReader(new FileReader(archivoPreguntas));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(archivoAux));
         
-        String currentLine;
-        while ((currentLine = reader.readLine()) != null) {
-            if (currentLine.contains(datoEliminar)) {
+        String linea;
+        while ((linea = reader.readLine()) != null) {
+            if (linea.replaceAll(" ", "").contains(datoEliminar.replaceAll(" ", ""))) {
                 continue;
             }
-            writer.write(currentLine + "\n");
+            writer.write(linea + "\n");
         }
         writer.close();
         reader.close();
-        inputFile.delete();
-        tempFile.renameTo(inputFile);
-        //Files.move(Paths.get("src/mainApp/simulador" + indexSimulador + "/Preguntas2.csv"), Paths.get("src/mainApp/simulador" + indexSimulador + "/Preguntas.csv"), StandardCopyOption.REPLACE_EXISTING);
-        
+        archivoPreguntas.delete();
+        archivoAux.renameTo(archivoPreguntas);      
     }
     
     public int longitudCSV(String ruta) throws IOException, FileNotFoundException, CsvValidationException{
@@ -160,7 +164,7 @@ public class Preguntas extends javax.swing.JPanel {
             FileWriter writer = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             PrintWriter printWriter = new PrintWriter(bufferedWriter);
-            printWriter.println(datos[0] + "," + datos[1] + "," + datos[2] + "," + datos[3] + "," + datos[4]);
+            printWriter.println(datos[0] + ";" + datos[1] + ";" + datos[2] + ";" + datos[3] + ";" + datos[4]);
 
             printWriter.flush();
             printWriter.close();
@@ -258,9 +262,9 @@ public class Preguntas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenosMouseReleased
-        //String d = TextoPregunta.getText() + ";" + jLabel1.getText() + ";" + jLabel3.getText() + ";" + jLabel4.getText() + ";" + jLabel5.getText();
+        String d = TextoPregunta.getText() + ";" + jLabel1.getText() + ";" + jLabel3.getText() + ";" + jLabel4.getText() + ";" + jLabel5.getText();
         try {
-            eliminarDato(TextoPregunta.getText(), indexSimulador);
+            eliminarDato(d, indexSimulador);
         } catch (IOException ex) {
             Logger.getLogger(Preguntas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CsvValidationException ex) {
