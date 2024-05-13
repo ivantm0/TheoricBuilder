@@ -41,9 +41,11 @@ public class Preguntas extends javax.swing.JPanel {
      * Creates new form Preguntas2
      */
     int indexSimulador;
-    public Preguntas(int indexSimulador) throws IOException, FileNotFoundException, CsvValidationException {
+    JPanel jPanel2 = new JPanel();
+    public Preguntas(int indexSimulador, JPanel panel) throws IOException, FileNotFoundException, CsvValidationException {
         initComponents();
         this.indexSimulador = indexSimulador;
+        this.jPanel2 = panel;
         setImageLabel(Menos, "src/images/Menos_on.png", 20, 20);
         setImageLabel(Fondo, "src/images/Cuadrado_off.png", 390, 293);
         setImageLabel(TituloPreg, "src/images/Rectangulo_on.png", 320, 40);
@@ -58,6 +60,33 @@ public class Preguntas extends javax.swing.JPanel {
         Icon icon = new ImageIcon(image.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         labelName.setIcon(icon);
         this.repaint();
+    }
+    
+    public void colocarPanel(String ruta){
+        try {
+            int aux = longitudCSV(ruta);
+            ArrayList<Preguntas> paneles= new ArrayList<>();
+            jPanel2.removeAll();
+            
+            for(int i=0; i<aux; i++){
+                paneles.add(new Preguntas(indexSimulador, jPanel2));
+                paneles.get(i).cargarCSV(i, ruta);
+                showPanel(paneles.get(i), jPanel2);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CsvValidationException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+    }
+    
+    public void showPanel(JPanel p, JPanel p2){
+        p.setSize(p2.getWidth(), p2.getHeight());
+        p.setLocation(0, 0);
+        //p2.removeAll();
+        p2.add(p, new org.netbeans.lib.awtextra.AbsoluteConstraints(0,0,-1,-1));
+        p2.revalidate();
+        p2.repaint();
     }
     
     public void cargarCSV(int index, String ruta) throws IOException, FileNotFoundException, CsvValidationException{
@@ -90,11 +119,9 @@ public class Preguntas extends javax.swing.JPanel {
         return datos;
     }
     
-    public void eliminarDato(String datoEliminar, String ruta, int indexSimulador) throws IOException, FileNotFoundException, CsvValidationException{
+    public void eliminarDato(String datoEliminar, int indexSimulador) throws IOException, FileNotFoundException, CsvValidationException{
         File inputFile = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas.csv");
         File tempFile = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas2.csv");
-        System.out.println(ruta);
-        System.out.println("src/mainApp/simulador" + indexSimulador + "/Preguntas2.csv");
     
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
@@ -233,7 +260,7 @@ public class Preguntas extends javax.swing.JPanel {
     private void MenosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenosMouseReleased
         //String d = TextoPregunta.getText() + ";" + jLabel1.getText() + ";" + jLabel3.getText() + ";" + jLabel4.getText() + ";" + jLabel5.getText();
         try {
-            eliminarDato(TextoPregunta.getText(), "src/mainApp/simulador" + indexSimulador +"/Preguntas.csv", indexSimulador);
+            eliminarDato(TextoPregunta.getText(), indexSimulador);
         } catch (IOException ex) {
             Logger.getLogger(Preguntas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CsvValidationException ex) {
@@ -242,6 +269,8 @@ public class Preguntas extends javax.swing.JPanel {
         this.removeAll();
         this.revalidate();
         this.repaint();
+        
+        colocarPanel("src/mainApp/simulador" + indexSimulador +"/Preguntas.csv");
     }//GEN-LAST:event_MenosMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

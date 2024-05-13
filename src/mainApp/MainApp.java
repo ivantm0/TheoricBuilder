@@ -34,8 +34,9 @@ public class MainApp extends javax.swing.JFrame {
      * Creates new form prueba
      */
     int indexSim = 1;
-    Preguntas p = new Preguntas(indexSim);
+    Preguntas p;
     public MainApp() throws IOException, FileNotFoundException, CsvValidationException {
+        this.p = new Preguntas(indexSim, jPanel2);
         initComponents();
         setAlwaysOnTop(true);
         ContDesp.setVisible(false);
@@ -82,7 +83,7 @@ public class MainApp extends javax.swing.JFrame {
             jPanel2.removeAll();
             
             for(int i=0; i<aux; i++){
-                paneles.add(new Preguntas(indexSim));
+                paneles.add(new Preguntas(indexSim, jPanel2));
                 paneles.get(i).cargarCSV(i, ruta);
                 showPanel(paneles.get(i), jPanel2);
             }
