@@ -18,6 +18,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -41,7 +45,7 @@ public class Preguntas extends javax.swing.JPanel {
         initComponents();
         this.indexSimulador = indexSimulador;
         setImageLabel(Menos, "src/images/Menos_on.png", 20, 20);
-        setImageLabel(Fondo, "src/images/Cuadrado_off.png", 390, 288);
+        setImageLabel(Fondo, "src/images/Cuadrado_off.png", 390, 293);
         setImageLabel(TituloPreg, "src/images/Rectangulo_on.png", 320, 40);
         setImageLabel(Correcta, "src/images/Rectangulo_on.png", 320, 20);
         setImageLabel(Incorrecta1, "src/images/Rectangulo_on.png", 320, 20);
@@ -81,13 +85,16 @@ public class Preguntas extends javax.swing.JPanel {
             datos.add(Arrays.toString(fields));            
             line = br.readLine();
         }
+        br.close();
         
         return datos;
     }
     
-    public void eliminarDato(String datoEliminar, String ruta) throws IOException, FileNotFoundException, CsvValidationException{
-        File inputFile = new File(ruta);
-        File tempFile = new File("src/mainApp/simulador5/Preguntas2.csv");
+    public void eliminarDato(String datoEliminar, String ruta, int indexSimulador) throws IOException, FileNotFoundException, CsvValidationException{
+        File inputFile = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas.csv");
+        File tempFile = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas2.csv");
+        System.out.println(ruta);
+        System.out.println("src/mainApp/simulador" + indexSimulador + "/Preguntas2.csv");
     
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
@@ -103,6 +110,8 @@ public class Preguntas extends javax.swing.JPanel {
         reader.close();
         inputFile.delete();
         tempFile.renameTo(inputFile);
+        //Files.move(Paths.get("src/mainApp/simulador" + indexSimulador + "/Preguntas2.csv"), Paths.get("src/mainApp/simulador" + indexSimulador + "/Preguntas.csv"), StandardCopyOption.REPLACE_EXISTING);
+        
     }
     
     public int longitudCSV(String ruta) throws IOException, FileNotFoundException, CsvValidationException{
@@ -223,9 +232,8 @@ public class Preguntas extends javax.swing.JPanel {
 
     private void MenosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenosMouseReleased
         //String d = TextoPregunta.getText() + ";" + jLabel1.getText() + ";" + jLabel3.getText() + ";" + jLabel4.getText() + ";" + jLabel5.getText();
-
         try {
-            eliminarDato(TextoPregunta.getText(), "src/mainApp/simulador" + indexSimulador +"/Preguntas.csv");
+            eliminarDato(TextoPregunta.getText(), "src/mainApp/simulador" + indexSimulador +"/Preguntas.csv", indexSimulador);
         } catch (IOException ex) {
             Logger.getLogger(Preguntas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CsvValidationException ex) {
@@ -234,7 +242,6 @@ public class Preguntas extends javax.swing.JPanel {
         this.removeAll();
         this.revalidate();
         this.repaint();
-
     }//GEN-LAST:event_MenosMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -37,6 +37,7 @@ public class MainApp extends javax.swing.JFrame {
     Preguntas p = new Preguntas(indexSim);
     public MainApp() throws IOException, FileNotFoundException, CsvValidationException {
         initComponents();
+        setAlwaysOnTop(true);
         ContDesp.setVisible(false);
         PanelInfo.setVisible(false);
         Anadir.setVisible(false);
@@ -567,6 +568,7 @@ public class MainApp extends javax.swing.JFrame {
         Anadir.setVisible(false);
         setImageLabel(Mas, "src/images/Mas_off.png");
         colocarPanel("src/mainApp/simulador" + indexSim + "/Preguntas.csv");
+        cont3--;
     }//GEN-LAST:event_BtnAnadirMouseReleased
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
