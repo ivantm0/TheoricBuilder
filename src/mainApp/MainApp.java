@@ -34,30 +34,36 @@ public class MainApp extends javax.swing.JFrame {
      * Creates new form prueba
      */
     int indexSim = 1;
-    Preguntas p;
+    Preguntas p, p2;
+    ArrayList<String> opcion1 = new ArrayList<>();
+    ArrayList<String> opcion2 = new ArrayList<>();
+    ArrayList<String> opcion3 = new ArrayList<>();
+    ArrayList<String> opcion4 = new ArrayList<>();
+    ArrayList<String> opcion5 = new ArrayList<>();
+    ArrayList<Preguntas> paneles1 = new ArrayList<>();
+    ArrayList<Preguntas> paneles2 = new ArrayList<>();
+    ArrayList<Preguntas> paneles3 = new ArrayList<>();
+    ArrayList<Preguntas> paneles4 = new ArrayList<>();
+    ArrayList<Preguntas> paneles5 = new ArrayList<>();
     public MainApp() throws IOException, FileNotFoundException, CsvValidationException {
-        this.p = new Preguntas(indexSim, jPanel2);
+        this.p = new Preguntas(indexSim);
+        this.p2 = new Preguntas(indexSim);
         initComponents();
         setAlwaysOnTop(true);
         ContDesp.setVisible(false);
         PanelInfo.setVisible(false);
-        Anadir.setVisible(false);
         setImageLabel(Mas, "src/images/Mas_off.png");
         setImageLabel(Info, "src/images/Info_off.png");
         setImageLabel(Desplegable, "src/images/Desplegable_off.png");
         setImageLabel(FondoDesp, "src/images/Cuadrado_off.png");
-        setImageLabel(BtnAnadir, "src/images/Cilindrico_on.png");
         setImageLabel(FondoInfo, "src/images/Panel_Info.png");
-        setImageLabel(jLabel2, "src/images/Cuadrado_off.png");
-        setImageLabel(TituloPreg, "src/images/Rectangulo_on.png");
-        setImageLabel(Correcta, "src/images/Rectangulo_on.png");
-        setImageLabel(Incorrecta1, "src/images/Rectangulo_on.png");
-        setImageLabel(Incorrecta2, "src/images/Rectangulo_on.png");
-        setImageLabel(Incorrecta3, "src/images/Rectangulo_on.png");
         setImageLabel(Crear, "src/images/Cilindrico_on.png");
         Panel.getViewport().setOpaque(false);
         Panel.setViewportBorder(null);
-        Panel.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));        
+        Panel.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        
+        opcion1 = p.datosCSV("src/mainApp/simulador1/Preguntas.csv");
+        paneles1 = p.cargarCSV(opcion1, jPanel2);
     }
     
     public void setImageLabel(JLabel labelName, String root){
@@ -76,7 +82,7 @@ public class MainApp extends javax.swing.JFrame {
         p2.repaint();
     }
     
-    public void colocarPanel(String ruta){
+    /*public void colocarPanel(String ruta){
         try {
             int aux = p.longitudCSV(ruta);
             ArrayList<Preguntas> paneles= new ArrayList<>();
@@ -92,9 +98,9 @@ public class MainApp extends javax.swing.JFrame {
         } catch (CsvValidationException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }  
-    }
+    }/*
     
-    public static void archivoZip(String ruta, String destino) throws IOException {
+    /*public static void archivoZip(String ruta, String destino) throws IOException {
         FileOutputStream archivo = new FileOutputStream(destino);
         ZipOutputStream zip = new ZipOutputStream(archivo);
 
@@ -113,7 +119,7 @@ public class MainApp extends javax.swing.JFrame {
         zip.close();
         fis.close();
         archivo.close();
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -133,23 +139,6 @@ public class MainApp extends javax.swing.JFrame {
         frase2 = new javax.swing.JLabel();
         Mas = new javax.swing.JLabel();
         Info = new javax.swing.JLabel();
-        Anadir = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        Titulo = new javax.swing.JLabel();
-        TituloPreg = new javax.swing.JLabel();
-        Titulo1 = new javax.swing.JLabel();
-        Correcta = new javax.swing.JLabel();
-        Titulo2 = new javax.swing.JLabel();
-        Incorrecta1 = new javax.swing.JLabel();
-        Incorrecta2 = new javax.swing.JLabel();
-        Incorrecta3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        BtnAnadir = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         Panel = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         ContDesp = new javax.swing.JPanel();
@@ -215,87 +204,6 @@ public class MainApp extends javax.swing.JFrame {
                 InfoMouseReleased(evt);
             }
         });
-
-        Anadir.setOpaque(false);
-        Anadir.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jTextField1.setBackground(new java.awt.Color(182, 225, 249));
-        jTextField1.setFont(new java.awt.Font("Raleway", 0, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(5, 19, 36));
-        jTextField1.setBorder(null);
-        Anadir.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 300, 40));
-
-        jTextField2.setBackground(new java.awt.Color(182, 225, 249));
-        jTextField2.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(5, 19, 36));
-        jTextField2.setBorder(null);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        Anadir.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 300, 20));
-
-        jTextField3.setBackground(new java.awt.Color(182, 225, 249));
-        jTextField3.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(5, 19, 36));
-        jTextField3.setBorder(null);
-        Anadir.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 300, 20));
-
-        jTextField4.setBackground(new java.awt.Color(182, 225, 249));
-        jTextField4.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(5, 19, 36));
-        jTextField4.setBorder(null);
-        Anadir.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 300, 20));
-
-        jTextField5.setBackground(new java.awt.Color(182, 225, 249));
-        jTextField5.setFont(new java.awt.Font("Raleway", 0, 14)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(5, 19, 36));
-        jTextField5.setBorder(null);
-        Anadir.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 300, 20));
-
-        Titulo.setForeground(new java.awt.Color(255, 255, 255));
-        Titulo.setText("Pregunta");
-        Anadir.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 120, -1));
-
-        TituloPreg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(TituloPreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 320, 40));
-
-        Titulo1.setForeground(new java.awt.Color(255, 255, 255));
-        Titulo1.setText("Respuesta correcta");
-        Anadir.add(Titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 120, -1));
-
-        Correcta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(Correcta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 320, 20));
-
-        Titulo2.setForeground(new java.awt.Color(255, 255, 255));
-        Titulo2.setText("Respuestas incorrectas");
-        Anadir.add(Titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 140, 20));
-
-        Incorrecta1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(Incorrecta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 320, 20));
-
-        Incorrecta2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(Incorrecta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 320, 20));
-
-        Incorrecta3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangulo_On.png"))); // NOI18N
-        Anadir.add(Incorrecta3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 320, 20));
-
-        jLabel1.setFont(new java.awt.Font("Raleway", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(5, 19, 36));
-        jLabel1.setText("Añadir");
-        Anadir.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, -1, -1));
-
-        BtnAnadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cilindrico_On.png"))); // NOI18N
-        BtnAnadir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                BtnAnadirMouseReleased(evt);
-            }
-        });
-        Anadir.add(BtnAnadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 100, 20));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cuadrado_Off.png"))); // NOI18N
-        Anadir.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 380, 290));
 
         Panel.setBackground(new java.awt.Color(0, 0, 204));
         Panel.setBorder(null);
@@ -410,7 +318,6 @@ public class MainApp extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ContenidoLayout.createSequentialGroup()
                 .addGap(0, 24, Short.MAX_VALUE)
                 .addGroup(ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(Anadir, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ContenidoLayout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addComponent(titulo))
@@ -446,10 +353,8 @@ public class MainApp extends javax.swing.JFrame {
                     .addComponent(Info, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PanelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Anadir, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ContenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ContenidoLayout.createSequentialGroup()
@@ -477,21 +382,34 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_InfoMouseReleased
 
     private void Opcion1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion1MouseReleased
-        indexSim = 1;
-        Display.setText("Ahora aprendo");
-        ContDesp.setVisible(false);
-        setImageLabel(Desplegable, "src/images/Desplegable_off.png");
-        cont--;
-        
-        colocarPanel("src/mainApp/simulador1/Preguntas.csv");
+        try {    
+            indexSim = 1;            
+            Display.setText("Ahora aprendo");
+            ContDesp.setVisible(false);
+            setImageLabel(Desplegable, "src/images/Desplegable_off.png");
+            cont--;
+            p.cargarCSV(opcion1, jPanel2);
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CsvValidationException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Opcion1MouseReleased
 
     private void DesplegableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DesplegableMouseReleased
         if(cont == 0){
-            ContDesp.setVisible(true);
-            setImageLabel(FondoDesp, "src/images/Cuadrado_off.png");
-            setImageLabel(Desplegable, "src/images/Desplegable_on.png");
-            cont++;
+            try {
+                ContDesp.setVisible(true);
+                setImageLabel(FondoDesp, "src/images/Cuadrado_off.png");
+                setImageLabel(Desplegable, "src/images/Desplegable_on.png");
+                cont++;
+                opcion1 = p.leerVacio(opcion1, paneles1);
+            } catch (IOException ex) {
+                Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CsvValidationException ex) {
+                Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }else{
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
@@ -500,87 +418,106 @@ public class MainApp extends javax.swing.JFrame {
     }//GEN-LAST:event_DesplegableMouseReleased
 
     private void Opcion2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion2MouseReleased
-        indexSim = 2;
-        Display.setText("El cazador");
-        ContDesp.setVisible(false);
-        setImageLabel(Desplegable, "src/images/Desplegable_off.png");
-        cont--;
-        
-        colocarPanel("src/mainApp/simulador2/Preguntas.csv");
+        try {
+            indexSim = 2;
+            opcion2 = p.datosCSV("src/mainApp/simulador2/Preguntas.csv");
+            Display.setText("El cazador");
+            ContDesp.setVisible(false);
+            setImageLabel(Desplegable, "src/images/Desplegable_off.png");
+            cont--;
+            p.cargarCSV(opcion2, jPanel2);
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CsvValidationException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Opcion2MouseReleased
 
     private void Opcion3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion3MouseReleased
-        indexSim = 3;
-        Display.setText("Atrapa los univercoins");
-        ContDesp.setVisible(false);
-        setImageLabel(Desplegable, "src/images/Desplegable_off.png");
-        cont--;
-        
-        colocarPanel("src/mainApp/simulador3/Preguntas.csv");
+        try {    
+            indexSim = 3;
+            opcion3 = p.datosCSV("src/mainApp/simulador3/Preguntas.csv");
+            Display.setText("Atrapa los univercoins");
+            ContDesp.setVisible(false);
+            setImageLabel(Desplegable, "src/images/Desplegable_off.png");
+            cont--;
+            p.cargarCSV(opcion3, jPanel2);
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CsvValidationException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Opcion3MouseReleased
 
     private void Opcion4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion4MouseReleased
-        indexSim = 4;
-        Display.setText("BAAM");
-        ContDesp.setVisible(false);
-        setImageLabel(Desplegable, "src/images/Desplegable_off.png");
-        cont--;
-        
-        colocarPanel("src/mainApp/simulador4/Preguntas.csv");
+        try {    
+            indexSim = 4;
+            opcion4 = p.datosCSV("src/mainApp/simulador4/Preguntas.csv");
+            Display.setText("BAAM");
+            ContDesp.setVisible(false);
+            setImageLabel(Desplegable, "src/images/Desplegable_off.png");
+            cont--;
+            p.cargarCSV(opcion4, jPanel2);
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CsvValidationException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Opcion4MouseReleased
 
     private void Opcion5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion5MouseReleased
-        indexSim = 5;
-        Display.setText("PiensoPalabra");
-        ContDesp.setVisible(false);
-        setImageLabel(Desplegable, "src/images/Desplegable_off.png");
-        cont--;
-        
-        colocarPanel("src/mainApp/simulador5/Preguntas.csv");
+        try {    
+            indexSim = 5;
+            opcion5 = p.datosCSV("src/mainApp/simulador5/Preguntas.csv");
+            Display.setText("PiensoPalabra");
+            ContDesp.setVisible(false);
+            setImageLabel(Desplegable, "src/images/Desplegable_off.png");
+            cont--;
+            p.cargarCSV(opcion5, jPanel2);
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CsvValidationException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_Opcion5MouseReleased
 
     private void MasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MasMouseReleased
-        
-        if(cont3 == 0){
-            Anadir.setVisible(true);
-            //setImageLabel(FondoDesp, "src/images/Cuadrado_off.png");
-            setImageLabel(Mas, "src/images/Mas_on.png");
-            cont3++;
-        }else{
-            Anadir.setVisible(false);
-            setImageLabel(Mas, "src/images/Mas_off.png");
-            cont3--;
+        try { 
+            String datos = " , , , , ";
+            //p.escribirCSV("src/mainApp/simulador" + indexSim + "/Preguntas.csv", datos);
+            if(indexSim == 1){   
+                opcion1.add(datos);
+                p.cargarCSV(opcion1, jPanel2);
+                paneles1 = p.cargarCSV(opcion1, jPanel2);
+            }else if(indexSim == 2){    
+                opcion2.add(datos);
+                p.cargarCSV(opcion2, jPanel2);
+            }else if(indexSim == 3){    
+                opcion3.add(datos);
+                p.cargarCSV(opcion3, jPanel2);
+            }else if(indexSim == 4){    
+                opcion4.add(datos);
+                p.cargarCSV(opcion4, jPanel2);
+            }else if(indexSim == 5){    
+                opcion5.add(datos);
+                p.cargarCSV(opcion5, jPanel2);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CsvValidationException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_MasMouseReleased
 
-    private void BtnAnadirMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAnadirMouseReleased
-        String[] datos = new String[5];
-        datos[0] = jTextField1.getText();
-        datos[1] = jTextField2.getText();
-        datos[2] = jTextField3.getText();
-        datos[3] = jTextField4.getText();
-        datos[4] = jTextField5.getText();
-        
-        if(datos[0].equals("") || datos[1].equals("") || datos[2].equals("") || datos[3].equals("") || datos[4].equals("")){
-            
-        }else{
-            p.escribirCSV("src/mainApp/simulador" + indexSim +"/Preguntas.csv", datos);
-            Anadir.setVisible(false);
-            setImageLabel(Mas, "src/images/Mas_off.png");
-            colocarPanel("src/mainApp/simulador" + indexSim + "/Preguntas.csv");
-            cont3--;
-        }
-    }//GEN-LAST:event_BtnAnadirMouseReleased
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
     private void CrearMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearMouseReleased
         try {
-            String ruta1 = "src/mainApp/simulador" + indexSim + "/Preguntas.csv";
-            String ruta2 = "src/mainApp/simulador" + indexSim + "/Preguntas.zip";
-            archivoZip(ruta1, ruta2);
+            //String ruta1 = "src/mainApp/simulador" + indexSim + "/Preguntas.csv";
+            //String ruta2 = "src/mainApp/simulador" + indexSim + "/Preguntas.zip";
+            //archivoZip(ruta1, ruta2);
+            Zipper z = new Zipper(new File("src/mainApp/simulador" + indexSim + "/simulador.zip"));
+            z.zip(new File("src/mainApp/simulador" + indexSim));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -632,20 +569,14 @@ public class MainApp extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Anadir;
-    private javax.swing.JLabel BtnAnadir;
     private javax.swing.JPanel ContDesp;
     private javax.swing.JPanel Contenido;
-    private javax.swing.JLabel Correcta;
     private javax.swing.JLabel Crear;
     private javax.swing.JLabel Desplegable;
     private javax.swing.JLabel Display;
     private javax.swing.JLabel EtiqCrear;
     private javax.swing.JLabel FondoDesp;
     private javax.swing.JLabel FondoInfo;
-    private javax.swing.JLabel Incorrecta1;
-    private javax.swing.JLabel Incorrecta2;
-    private javax.swing.JLabel Incorrecta3;
     private javax.swing.JLabel Info;
     private javax.swing.JLabel Mas;
     private javax.swing.JLabel Opcion1;
@@ -658,21 +589,10 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JLabel Texto1;
     private javax.swing.JLabel Texto2;
     private javax.swing.JLabel Texto3;
-    private javax.swing.JLabel Titulo;
-    private javax.swing.JLabel Titulo1;
-    private javax.swing.JLabel Titulo2;
-    private javax.swing.JLabel TituloPreg;
     private javax.swing.JLabel frase1;
     private javax.swing.JLabel frase2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
