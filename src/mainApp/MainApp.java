@@ -6,19 +6,13 @@ package mainApp;
 
 import com.opencsv.exceptions.CsvValidationException;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -46,7 +40,7 @@ public class MainApp extends javax.swing.JFrame {
     ArrayList<Preguntas> paneles4 = new ArrayList<>();
     ArrayList<Preguntas> paneles5 = new ArrayList<>();
     public MainApp() throws IOException, FileNotFoundException, CsvValidationException {
-        this.p = new Preguntas(indexSim);
+        this.p = new Preguntas(indexSim, jPanel2);
         initComponents();
         setAlwaysOnTop(true);
         ContDesp.setVisible(false);
@@ -67,6 +61,10 @@ public class MainApp extends javax.swing.JFrame {
         opcion3 = p.datosCSV("src/mainApp/simulador3/Preguntas.csv");
         opcion4 = p.datosCSV("src/mainApp/simulador4/Preguntas.csv");
         opcion5 = p.datosCSV("src/mainApp/simulador5/Preguntas.csv");
+        paneles5 = p.cargarCSV(opcion5, jPanel2, indexSim);
+        paneles4 = p.cargarCSV(opcion4, jPanel2, indexSim);
+        paneles3 = p.cargarCSV(opcion3, jPanel2, indexSim);
+        paneles2 = p.cargarCSV(opcion2, jPanel2, indexSim);
         paneles1 = p.cargarCSV(opcion1, jPanel2, indexSim);
         
     }
@@ -105,8 +103,6 @@ public class MainApp extends javax.swing.JFrame {
         frase2 = new javax.swing.JLabel();
         Mas = new javax.swing.JLabel();
         Info = new javax.swing.JLabel();
-        Panel = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
         ContDesp = new javax.swing.JPanel();
         Opcion1 = new javax.swing.JLabel();
         Opcion2 = new javax.swing.JLabel();
@@ -114,6 +110,8 @@ public class MainApp extends javax.swing.JFrame {
         Opcion4 = new javax.swing.JLabel();
         Opcion5 = new javax.swing.JLabel();
         FondoDesp = new javax.swing.JLabel();
+        Panel = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
         EtiqCrear = new javax.swing.JLabel();
         Crear = new javax.swing.JLabel();
         PanelInfo = new javax.swing.JPanel();
@@ -172,16 +170,6 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
-        Panel.setBackground(new java.awt.Color(0, 0, 204));
-        Panel.setBorder(null);
-        Panel.setForeground(new java.awt.Color(255, 51, 51));
-        Panel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        Panel.setOpaque(false);
-
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.GridLayout(0, 1));
-        Panel.setViewportView(jPanel2);
-
         ContDesp.setOpaque(false);
         ContDesp.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -235,6 +223,16 @@ public class MainApp extends javax.swing.JFrame {
         });
         ContDesp.add(Opcion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 128, 360, 20));
         ContDesp.add(FondoDesp, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 380, 160));
+
+        Panel.setBackground(new java.awt.Color(0, 0, 204));
+        Panel.setBorder(null);
+        Panel.setForeground(new java.awt.Color(255, 51, 51));
+        Panel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        Panel.setOpaque(false);
+
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new java.awt.GridLayout(0, 1));
+        Panel.setViewportView(jPanel2);
 
         EtiqCrear.setBackground(new java.awt.Color(5, 19, 36));
         EtiqCrear.setFont(new java.awt.Font("Raleway", 1, 20)); // NOI18N
@@ -358,15 +356,14 @@ public class MainApp extends javax.swing.JFrame {
 
     private void Opcion1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion1MouseReleased
         try {    
-            indexSim = 1;            
+            indexSim = 1; 
+            opcion1 = p.datosCSV("src/mainApp/simulador1/Preguntas.csv");
             Display.setText("Ahora aprendo");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
             cont--;
             p.cargarCSV(opcion1, jPanel2, indexSim);
         } catch (IOException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CsvValidationException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Opcion1MouseReleased
@@ -381,21 +378,29 @@ public class MainApp extends javax.swing.JFrame {
                 cont++;
                 
                 if(indexSim == 1){   
+                    opcion1 = p.datosCSV("src/mainApp/simulador1/Preguntas.csv");
                     opcion1 = p.leerVacio(opcion1, paneles1);
+                    p.eliminarDato2(opcion1, indexSim);
                 }else if(indexSim == 2){                      
+                    opcion2 = p.datosCSV("src/mainApp/simulador2/Preguntas.csv");
                     opcion2 = p.leerVacio(opcion2, paneles2);
+                    p.eliminarDato2(opcion2, indexSim);
                 }else if(indexSim == 3){    
+                    opcion3 = p.datosCSV("src/mainApp/simulador3/Preguntas.csv");
                     opcion3 = p.leerVacio(opcion3, paneles3);
+                    p.eliminarDato2(opcion3, indexSim);
                 }else if(indexSim == 4){    
+                    opcion4 = p.datosCSV("src/mainApp/simulador4/Preguntas.csv");
                     opcion4 = p.leerVacio(opcion4, paneles4);
+                    p.eliminarDato2(opcion4, indexSim);
                 }else if(indexSim == 5){    
+                    opcion5 = p.datosCSV("src/mainApp/simulador5/Preguntas.csv");
                     opcion5 = p.leerVacio(opcion5, paneles5);
+                    p.eliminarDato2(opcion5, indexSim);
                 }
                 
                 
             } catch (IOException ex) {
-                Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (CsvValidationException ex) {
                 Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -409,6 +414,7 @@ public class MainApp extends javax.swing.JFrame {
     private void Opcion2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion2MouseReleased
         try {
             indexSim = 2;
+            opcion2 = p.datosCSV("src/mainApp/simulador2/Preguntas.csv");
             Display.setText("El cazador");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
@@ -416,14 +422,13 @@ public class MainApp extends javax.swing.JFrame {
             p.cargarCSV(opcion2, jPanel2, indexSim);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CsvValidationException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Opcion2MouseReleased
 
     private void Opcion3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion3MouseReleased
         try {    
             indexSim = 3;
+            opcion3 = p.datosCSV("src/mainApp/simulador3/Preguntas.csv");
             Display.setText("Atrapa los univercoins");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
@@ -431,14 +436,13 @@ public class MainApp extends javax.swing.JFrame {
             p.cargarCSV(opcion3, jPanel2, indexSim);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CsvValidationException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Opcion3MouseReleased
 
     private void Opcion4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion4MouseReleased
         try {    
             indexSim = 4;
+            opcion4 = p.datosCSV("src/mainApp/simulador4/Preguntas.csv");
             Display.setText("BAAM");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
@@ -446,22 +450,19 @@ public class MainApp extends javax.swing.JFrame {
             p.cargarCSV(opcion4, jPanel2, indexSim);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CsvValidationException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Opcion4MouseReleased
 
     private void Opcion5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion5MouseReleased
         try {    
             indexSim = 5;
+            opcion5 = p.datosCSV("src/mainApp/simulador5/Preguntas.csv");
             Display.setText("PiensoPalabra");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
             cont--;
             p.cargarCSV(opcion5, jPanel2, indexSim);
         } catch (IOException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CsvValidationException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Opcion5MouseReleased
@@ -474,22 +475,25 @@ public class MainApp extends javax.swing.JFrame {
             if(indexSim == 1){   
                 opcion1.add(datos);
                 paneles1 = p.cargarCSV(opcion1, jPanel2, indexSim);
+                p.eliminarDato2(opcion1, indexSim);
             }else if(indexSim == 2){ 
                 opcion2.add(datos);
                 paneles2 = p.cargarCSV(opcion2, jPanel2, indexSim);
+                p.eliminarDato2(opcion2, indexSim);
             }else if(indexSim == 3){  
                 opcion3.add(datos);
                 paneles3 = p.cargarCSV(opcion3, jPanel2, indexSim);
+                p.eliminarDato2(opcion3, indexSim);
             }else if(indexSim == 4){  
                 opcion4.add(datos);
                 paneles4 = p.cargarCSV(opcion4, jPanel2, indexSim);
+                p.eliminarDato2(opcion4, indexSim);
             }else if(indexSim == 5){   
                 opcion5.add(datos);
                 paneles5 = p.cargarCSV(opcion5, jPanel2, indexSim);
+                p.eliminarDato2(opcion5, indexSim);
             }
         } catch (IOException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CsvValidationException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_MasMouseReleased
@@ -507,7 +511,7 @@ public class MainApp extends javax.swing.JFrame {
                     z.zip(new File("src/mainApp/simulador" + indexSim));
                 }
             }if(indexSim == 2){   
-                opcion1 = p.leerVacio(opcion2, paneles2);
+                opcion2 = p.leerVacio(opcion2, paneles2);
                 if(p.arrayVacio(opcion2)){
                     Rojo.setVisible(true);
                 }else{
@@ -517,8 +521,8 @@ public class MainApp extends javax.swing.JFrame {
                     z2.zip(new File("src/mainApp/simulador" + indexSim));
                 }
             }if(indexSim == 3){   
-                opcion1 = p.leerVacio(opcion3, paneles3);
-                if(p.arrayVacio(opcion2)){
+                opcion3 = p.leerVacio(opcion3, paneles3);
+                if(p.arrayVacio(opcion3)){
                     Rojo.setVisible(true);
                 }else{
                     Rojo.setVisible(false);
@@ -527,7 +531,7 @@ public class MainApp extends javax.swing.JFrame {
                     z3.zip(new File("src/mainApp/simulador" + indexSim));
                 }
             }if(indexSim == 4){   
-                opcion1 = p.leerVacio(opcion4, paneles4);
+                opcion4 = p.leerVacio(opcion4, paneles4);
                 if(p.arrayVacio(opcion4)){
                     Rojo.setVisible(true);
                 }else{
@@ -537,7 +541,7 @@ public class MainApp extends javax.swing.JFrame {
                     z4.zip(new File("src/mainApp/simulador" + indexSim));
                 }
             }if(indexSim == 5){   
-                opcion1 = p.leerVacio(opcion5, paneles5);
+                opcion5 = p.leerVacio(opcion5, paneles5);
                 if(p.arrayVacio(opcion5)){
                     Rojo.setVisible(true);
                 }else{
@@ -547,12 +551,9 @@ public class MainApp extends javax.swing.JFrame {
                     z5.zip(new File("src/mainApp/simulador" + indexSim));
                 }
             }
-            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CsvValidationException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_CrearMouseReleased
