@@ -28,7 +28,7 @@ public class MainApp extends javax.swing.JFrame {
      * Creates new form prueba
      */
     int indexSim = 1;
-    Preguntas p;
+    Preguntas p1, p2, p3, p4, p5;
     ArrayList<String> opcion1 = new ArrayList<>();
     ArrayList<String> opcion2 = new ArrayList<>();
     ArrayList<String> opcion3 = new ArrayList<>();
@@ -40,7 +40,11 @@ public class MainApp extends javax.swing.JFrame {
     ArrayList<Preguntas> paneles4 = new ArrayList<>();
     ArrayList<Preguntas> paneles5 = new ArrayList<>();
     public MainApp() throws IOException, FileNotFoundException, CsvValidationException {
-        this.p = new Preguntas(indexSim, jPanel2);
+        this.p1 = new Preguntas(indexSim, jPanel2);
+        this.p2 = new Preguntas(indexSim, jPanel2);
+        this.p3 = new Preguntas(indexSim, jPanel2);
+        this.p4 = new Preguntas(indexSim, jPanel2);
+        this.p5 = new Preguntas(indexSim, jPanel2);
         initComponents();
         setAlwaysOnTop(true);
         ContDesp.setVisible(false);
@@ -56,16 +60,16 @@ public class MainApp extends javax.swing.JFrame {
         Panel.setViewportBorder(null);
         Panel.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
         
-        opcion1 = p.datosCSV("src/mainApp/simulador1/Preguntas.csv");
-        opcion2 = p.datosCSV("src/mainApp/simulador2/Preguntas.csv");
-        opcion3 = p.datosCSV("src/mainApp/simulador3/Preguntas.csv");
-        opcion4 = p.datosCSV("src/mainApp/simulador4/Preguntas.csv");
-        opcion5 = p.datosCSV("src/mainApp/simulador5/Preguntas.csv");
-        paneles5 = p.cargarCSV(opcion5, jPanel2, indexSim);
-        paneles4 = p.cargarCSV(opcion4, jPanel2, indexSim);
-        paneles3 = p.cargarCSV(opcion3, jPanel2, indexSim);
-        paneles2 = p.cargarCSV(opcion2, jPanel2, indexSim);
-        paneles1 = p.cargarCSV(opcion1, jPanel2, indexSim);
+        opcion1 = p1.datosCSV("src/mainApp/simulador1/Preguntas.csv");
+        opcion2 = p2.datosCSV("src/mainApp/simulador2/Preguntas.csv");
+        opcion3 = p3.datosCSV("src/mainApp/simulador3/Preguntas.csv");
+        opcion4 = p4.datosCSV("src/mainApp/simulador4/Preguntas.csv");
+        opcion5 = p5.datosCSV("src/mainApp/simulador5/Preguntas.csv");
+        paneles5 = p5.cargarCSV(opcion5, jPanel2, indexSim);
+        paneles4 = p4.cargarCSV(opcion4, jPanel2, indexSim);
+        paneles3 = p3.cargarCSV(opcion3, jPanel2, indexSim);
+        paneles2 = p2.cargarCSV(opcion2, jPanel2, indexSim);
+        paneles1 = p1.cargarCSV(opcion1, jPanel2, indexSim);
         
     }
     
@@ -357,12 +361,12 @@ public class MainApp extends javax.swing.JFrame {
     private void Opcion1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion1MouseReleased
         try {    
             indexSim = 1; 
-            opcion1 = p.datosCSV("src/mainApp/simulador1/Preguntas.csv");
+            opcion1 = p1.datosCSV("src/mainApp/simulador1/Preguntas.csv");
             Display.setText("Ahora aprendo");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
             cont--;
-            p.cargarCSV(opcion1, jPanel2, indexSim);
+            p1.cargarCSV(opcion1, jPanel2, indexSim);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -378,25 +382,25 @@ public class MainApp extends javax.swing.JFrame {
                 cont++;
                 
                 if(indexSim == 1){   
-                    opcion1 = p.datosCSV("src/mainApp/simulador1/Preguntas.csv");
-                    opcion1 = p.leerVacio(opcion1, paneles1);
-                    p.eliminarDato2(opcion1, indexSim);
+                    opcion1 = p1.datosCSV("src/mainApp/simulador1/Preguntas.csv");
+                    opcion1 = p1.leerVacio(opcion1, paneles1);
+                    p1.eliminarDato2(opcion1, indexSim);
                 }else if(indexSim == 2){                      
-                    opcion2 = p.datosCSV("src/mainApp/simulador2/Preguntas.csv");
-                    opcion2 = p.leerVacio(opcion2, paneles2);
-                    p.eliminarDato2(opcion2, indexSim);
+                    opcion2 = p2.datosCSV("src/mainApp/simulador2/Preguntas.csv");
+                    opcion2 = p2.leerVacio(opcion2, paneles2);
+                    p2.eliminarDato2(opcion2, indexSim);
                 }else if(indexSim == 3){    
-                    opcion3 = p.datosCSV("src/mainApp/simulador3/Preguntas.csv");
-                    opcion3 = p.leerVacio(opcion3, paneles3);
-                    p.eliminarDato2(opcion3, indexSim);
+                    opcion3 = p3.datosCSV("src/mainApp/simulador3/Preguntas.csv");
+                    opcion3 = p3.leerVacio(opcion3, paneles3);
+                    p3.eliminarDato2(opcion3, indexSim);
                 }else if(indexSim == 4){    
-                    opcion4 = p.datosCSV("src/mainApp/simulador4/Preguntas.csv");
-                    opcion4 = p.leerVacio(opcion4, paneles4);
-                    p.eliminarDato2(opcion4, indexSim);
+                    opcion4 = p4.datosCSV("src/mainApp/simulador4/Preguntas.csv");
+                    opcion4 = p4.leerVacio(opcion4, paneles4);
+                    p4.eliminarDato2(opcion4, indexSim);
                 }else if(indexSim == 5){    
-                    opcion5 = p.datosCSV("src/mainApp/simulador5/Preguntas.csv");
-                    opcion5 = p.leerVacio(opcion5, paneles5);
-                    p.eliminarDato2(opcion5, indexSim);
+                    opcion5 = p5.datosCSV("src/mainApp/simulador5/Preguntas.csv");
+                    opcion5 = p5.leerVacio(opcion5, paneles5);
+                    p5.eliminarDato2(opcion5, indexSim);
                 }
                 
                 
@@ -414,12 +418,12 @@ public class MainApp extends javax.swing.JFrame {
     private void Opcion2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion2MouseReleased
         try {
             indexSim = 2;
-            opcion2 = p.datosCSV("src/mainApp/simulador2/Preguntas.csv");
+            opcion2 = p2.datosCSV("src/mainApp/simulador2/Preguntas.csv");
             Display.setText("El cazador");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
             cont--;
-            p.cargarCSV(opcion2, jPanel2, indexSim);
+            p2.cargarCSV(opcion2, jPanel2, indexSim);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -428,12 +432,12 @@ public class MainApp extends javax.swing.JFrame {
     private void Opcion3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion3MouseReleased
         try {    
             indexSim = 3;
-            opcion3 = p.datosCSV("src/mainApp/simulador3/Preguntas.csv");
+            opcion3 = p3.datosCSV("src/mainApp/simulador3/Preguntas.csv");
             Display.setText("Atrapa los univercoins");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
             cont--;
-            p.cargarCSV(opcion3, jPanel2, indexSim);
+            p3.cargarCSV(opcion3, jPanel2, indexSim);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -442,12 +446,12 @@ public class MainApp extends javax.swing.JFrame {
     private void Opcion4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion4MouseReleased
         try {    
             indexSim = 4;
-            opcion4 = p.datosCSV("src/mainApp/simulador4/Preguntas.csv");
+            opcion4 = p4.datosCSV("src/mainApp/simulador4/Preguntas.csv");
             Display.setText("BAAM");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
             cont--;
-            p.cargarCSV(opcion4, jPanel2, indexSim);
+            p4.cargarCSV(opcion4, jPanel2, indexSim);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -456,12 +460,12 @@ public class MainApp extends javax.swing.JFrame {
     private void Opcion5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Opcion5MouseReleased
         try {    
             indexSim = 5;
-            opcion5 = p.datosCSV("src/mainApp/simulador5/Preguntas.csv");
+            opcion5 = p5.datosCSV("src/mainApp/simulador5/Preguntas.csv");
             Display.setText("PiensoPalabra");
             ContDesp.setVisible(false);
             setImageLabel(Desplegable, "src/images/Desplegable_off.png");
             cont--;
-            p.cargarCSV(opcion5, jPanel2, indexSim);
+            p5.cargarCSV(opcion5, jPanel2, indexSim);
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -474,24 +478,25 @@ public class MainApp extends javax.swing.JFrame {
             //p.escribirCSV("src/mainApp/simulador" + indexSim + "/Preguntas.csv", datos);
             if(indexSim == 1){   
                 opcion1.add(datos);
-                paneles1 = p.cargarCSV(opcion1, jPanel2, indexSim);
-                p.eliminarDato2(opcion1, indexSim);
+                p1.eliminarDato2(opcion1, indexSim);
+                paneles1 = p1.cargarCSV(opcion1, jPanel2, indexSim);
+                
             }else if(indexSim == 2){ 
                 opcion2.add(datos);
-                paneles2 = p.cargarCSV(opcion2, jPanel2, indexSim);
-                p.eliminarDato2(opcion2, indexSim);
+                paneles2 = p2.cargarCSV(opcion2, jPanel2, indexSim);
+                p2.eliminarDato2(opcion2, indexSim);
             }else if(indexSim == 3){  
                 opcion3.add(datos);
-                paneles3 = p.cargarCSV(opcion3, jPanel2, indexSim);
-                p.eliminarDato2(opcion3, indexSim);
+                paneles3 = p3.cargarCSV(opcion3, jPanel2, indexSim);
+                p3.eliminarDato2(opcion3, indexSim);
             }else if(indexSim == 4){  
                 opcion4.add(datos);
-                paneles4 = p.cargarCSV(opcion4, jPanel2, indexSim);
-                p.eliminarDato2(opcion4, indexSim);
+                paneles4 = p3.cargarCSV(opcion4, jPanel2, indexSim);
+                p3.eliminarDato2(opcion4, indexSim);
             }else if(indexSim == 5){   
                 opcion5.add(datos);
-                paneles5 = p.cargarCSV(opcion5, jPanel2, indexSim);
-                p.eliminarDato2(opcion5, indexSim);
+                paneles5 = p3.cargarCSV(opcion5, jPanel2, indexSim);
+                p3.eliminarDato2(opcion5, indexSim);
             }
         } catch (IOException ex) {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
@@ -501,52 +506,52 @@ public class MainApp extends javax.swing.JFrame {
     private void CrearMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearMouseReleased
         try {
             if(indexSim == 1){   
-                opcion1 = p.leerVacio(opcion1, paneles1);
-                if(p.arrayVacio(opcion1)){
+                opcion1 = p1.leerVacio(opcion1, paneles1);
+                if(p1.arrayVacio(opcion1)){
                     Rojo.setVisible(true);
                 }else{
                     Rojo.setVisible(false);
-                    p.eliminarDato2(opcion1, indexSim);
+                    p1.eliminarDato2(opcion1, indexSim);
                     Zipper z = new Zipper(new File("src/mainApp/simulador" + indexSim + "/simulador" + indexSim + ".zip"));
                     z.zip(new File("src/mainApp/simulador" + indexSim));
                 }
             }if(indexSim == 2){   
-                opcion2 = p.leerVacio(opcion2, paneles2);
-                if(p.arrayVacio(opcion2)){
+                opcion2 = p2.leerVacio(opcion2, paneles2);
+                if(p2.arrayVacio(opcion2)){
                     Rojo.setVisible(true);
                 }else{
                     Rojo.setVisible(false);
-                    p.eliminarDato2(opcion2, indexSim);
+                    p2.eliminarDato2(opcion2, indexSim);
                     Zipper z2 = new Zipper(new File("src/mainApp/simulador" + indexSim + "/simulador" + indexSim + ".zip"));
                     z2.zip(new File("src/mainApp/simulador" + indexSim));
                 }
             }if(indexSim == 3){   
-                opcion3 = p.leerVacio(opcion3, paneles3);
-                if(p.arrayVacio(opcion3)){
+                opcion3 = p3.leerVacio(opcion3, paneles3);
+                if(p3.arrayVacio(opcion3)){
                     Rojo.setVisible(true);
                 }else{
                     Rojo.setVisible(false);
-                    p.eliminarDato2(opcion3, indexSim);
+                    p3.eliminarDato2(opcion3, indexSim);
                     Zipper z3 = new Zipper(new File("src/mainApp/simulador" + indexSim + "/simulador" + indexSim + ".zip"));
                     z3.zip(new File("src/mainApp/simulador" + indexSim));
                 }
             }if(indexSim == 4){   
-                opcion4 = p.leerVacio(opcion4, paneles4);
-                if(p.arrayVacio(opcion4)){
+                opcion4 = p4.leerVacio(opcion4, paneles4);
+                if(p4.arrayVacio(opcion4)){
                     Rojo.setVisible(true);
                 }else{
                     Rojo.setVisible(false);
-                    p.eliminarDato2(opcion4, indexSim);
+                    p4.eliminarDato2(opcion4, indexSim);
                     Zipper z4 = new Zipper(new File("src/mainApp/simulador" + indexSim + "/simulador" + indexSim + ".zip"));
                     z4.zip(new File("src/mainApp/simulador" + indexSim));
                 }
             }if(indexSim == 5){   
-                opcion5 = p.leerVacio(opcion5, paneles5);
-                if(p.arrayVacio(opcion5)){
+                opcion5 = p5.leerVacio(opcion5, paneles5);
+                if(p5.arrayVacio(opcion5)){
                     Rojo.setVisible(true);
                 }else{
                     Rojo.setVisible(false);
-                    p.eliminarDato2(opcion5, indexSim);
+                    p5.eliminarDato2(opcion5, indexSim);
                     Zipper z5 = new Zipper(new File("src/mainApp/simulador" + indexSim + "/simulador" + indexSim + ".zip"));
                     z5.zip(new File("src/mainApp/simulador" + indexSim));
                 }

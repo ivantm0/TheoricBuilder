@@ -313,15 +313,11 @@ public class Preguntas extends javax.swing.JPanel {
         String d = TextoPregunta.getText() + "," + jLabel1.getText() + "," + jLabel3.getText() + "," + jLabel4.getText() + "," + jLabel5.getText();
         try {
             eliminarDato(d, indexSim);
-            this.removeAll();
-        this.revalidate();
-        this.repaint();
             altCargarCSV(panel, indexSim);
             
         } catch (IOException ex) {
             Logger.getLogger(Preguntas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         
         //colocarPanel("src/mainApp/simulador" + indexSimulador +"/Preguntas.csv");
     }//GEN-LAST:event_MenosMouseReleased
