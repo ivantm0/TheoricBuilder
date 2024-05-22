@@ -91,37 +91,16 @@ public class Preguntas extends javax.swing.JPanel {
         return datos;
     }
 
-    public ArrayList<Preguntas> cargarCSV(ArrayList datosCargar, JPanel panel) throws IOException, FileNotFoundException, CsvValidationException{
+    public ArrayList<Preguntas> cargarCSV(ArrayList datosCargar, JPanel panel, int index) throws IOException, FileNotFoundException, CsvValidationException{
         ArrayList<String> datos = new ArrayList<>();
         datos = datosCargar;
         ArrayList<Preguntas> paneles= new ArrayList<>();
         panel.removeAll();
         
         for(int i=0; i<datos.size(); i++){
-            paneles.add(new Preguntas(1));
+            paneles.add(new Preguntas(index));
             String texto = datos.get(i);
             String[] partes = texto.split(",");            
-            paneles.get(i).TextoPregunta.setText(partes[0].replaceAll("\\[", ""));
-            paneles.get(i).jLabel1.setText(partes[1]);
-            paneles.get(i).jLabel3.setText(partes[2]);
-            paneles.get(i).jLabel4.setText(partes[3]);
-            paneles.get(i).jLabel5.setText(partes[4].replaceAll("\\]", ""));            
-            showPanel(paneles.get(i), panel);
-        }
-        
-        return paneles;
-    }
-    
-    public ArrayList<Preguntas> cargarCSV2(ArrayList datosCargar, JPanel panel) throws IOException, FileNotFoundException, CsvValidationException{
-        ArrayList<String> datos = new ArrayList<>();
-        datos = datosCargar;
-        ArrayList<Preguntas> paneles= new ArrayList<>();
-        panel.removeAll();
-        
-        for(int i=0; i<datos.size(); i++){
-            paneles.add(new Preguntas(1));
-            String texto = datos.get(i);
-            String[] partes = texto.split(";");            
             paneles.get(i).TextoPregunta.setText(partes[0].replaceAll("\\[", ""));
             paneles.get(i).jLabel1.setText(partes[1]);
             paneles.get(i).jLabel3.setText(partes[2]);
@@ -150,6 +129,17 @@ public class Preguntas extends javax.swing.JPanel {
             nuevosDatos.add(partes[0] + "," + partes[1] + "," + partes[2] + "," + partes[3] + "," + partes[4]);
         }
         return nuevosDatos;
+    }
+    
+    public boolean arrayVacio(ArrayList comprobar){
+        boolean flag = false;
+        for(int i=0; i<comprobar.size(); i++){
+            if(comprobar.get(i).equals(" , , , , ")){
+                return true;
+            }
+        }
+        
+        return flag;
     }
     
     public void escribirCSV(String file, String[] datos){
@@ -183,6 +173,23 @@ public class Preguntas extends javax.swing.JPanel {
         }
         writer.close();
         reader.close();
+        archivoPreguntas.delete();
+        archivoAux.renameTo(archivoPreguntas);      
+    }
+    
+    public void eliminarDato2(ArrayList arrayNuevo, int indexSimulador) throws IOException, FileNotFoundException, CsvValidationException{
+        File archivoPreguntas = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas.csv");
+        File archivoAux = new File("src/mainApp/simulador" + indexSimulador + "/Preguntas2.csv");
+    
+        //BufferedReader reader = new BufferedReader(new FileReader(archivoPreguntas));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(archivoAux));
+        
+        for(int i=0; i<arrayNuevo.size(); i++){
+            writer.write(arrayNuevo.get(i)+ "\n");
+            System.out.println();
+        }
+        
+        writer.close();
         archivoPreguntas.delete();
         archivoAux.renameTo(archivoPreguntas);      
     }
